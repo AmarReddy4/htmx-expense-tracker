@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+  <div class="max-w-5xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-bold mb-8">Expense Tracker</h1>
+
+    <!-- Add expense form -->
+    <form
+      hx-post="/expenses"
+      hx-target="#dashboard"
+      hx-swap="innerHTML"
+      class="bg-gray-900 border border-gray-800 rounded-lg p-6 mb-8"
+    >
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <input
+          type="text" name="description" placeholder="Description" required
+          class="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+        />
+        <input
+          type="number" name="amount" placeholder="Amount" step="0.01" required
+          class="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+        />
+        <select
+          name="category"
+          class="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+        >
+          {% for cat in categories %}
+          <option value="{{ cat }}">{{ cat }}</option>
+          {% endfor %}
+        </select>
+        <input
+          type="date" name="date"
+          class="bg-gray-800 border border-gray-700 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
+        />
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded px-4 py-2 transition-colors"
+        >
+          Add Expense
+        </button>
+      </div>
+    </form>
+
+    <div id="dashboard">
+      {% include "partials/dashboard.html" %}
+    </div>
+  </div>
+</body>
+</html>

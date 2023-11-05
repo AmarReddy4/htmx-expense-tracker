@@ -1,0 +1,37 @@
+<tr class="border-b border-gray-800 bg-gray-800/50" id="row-{{ expense.id }}">
+  <td class="px-4 py-2">
+    <input type="date" name="date" value="{{ expense.date }}" form="edit-{{ expense.id }}"
+      class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-white w-full" />
+  </td>
+  <td class="px-4 py-2">
+    <input type="text" name="description" value="{{ expense.description }}" form="edit-{{ expense.id }}"
+      class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-white w-full" />
+  </td>
+  <td class="px-4 py-2">
+    <select name="category" form="edit-{{ expense.id }}"
+      class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-white">
+      {% for cat in categories %}
+      <option value="{{ cat }}" {% if cat == expense.category %}selected{% endif %}>{{ cat }}</option>
+      {% endfor %}
+    </select>
+  </td>
+  <td class="px-4 py-2">
+    <input type="number" name="amount" value="{{ expense.amount }}" step="0.01" form="edit-{{ expense.id }}"
+      class="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-white w-20 text-right" />
+  </td>
+  <td class="px-4 py-2 text-right">
+    <form id="edit-{{ expense.id }}"
+      hx-put="/expenses/{{ expense.id }}"
+      hx-target="#dashboard"
+      hx-swap="innerHTML"
+    >
+      <button type="submit" class="text-green-400 hover:text-green-300 text-xs mr-2">Save</button>
+      <button type="button"
+        hx-get="/"
+        hx-target="body"
+        hx-swap="outerHTML"
+        class="text-gray-400 hover:text-gray-300 text-xs"
+      >Cancel</button>
+    </form>
+  </td>
+</tr>
